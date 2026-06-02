@@ -263,7 +263,7 @@ export default function HomeScreen() {
           <Text style={[styles.greeting, { color: theme.colors.textSecondary }]}>
             欢迎回来 👋
           </Text>
-          <Text style={[styles.title, { color: theme.colors.text }]}>TaskFlow</Text>
+          <Text style={[styles.title, { color: theme.colors.text }]}>TaskFlow <Text style={[styles.versionBadge, { color: theme.colors.primary, backgroundColor: theme.colors.primary + '14' }]}>v1.1.0 · web</Text></Text>
         </View>
         <View style={styles.headerActions}>
           <TouchableOpacity
@@ -688,6 +688,16 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: -0.6,
     lineHeight: 38,
+  },
+  versionBadge: {
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 6,
+    overflow: 'hidden',
+    marginLeft: 4,
   },
   headerActions: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 <div align="center">
-  <img src=".github/preview/icon-banner.svg" alt="TaskFlow" width="180" height="180"/>
+  <img src=".github/preview/social-preview.png" alt="TaskFlow" width="100%"/>
 
 # 📱 TaskFlow
 

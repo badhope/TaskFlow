@@ -5,9 +5,6 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 permissions:
   contents: read
   pages: write
@@ -28,97 +25,67 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
-          cache: 'npm'
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
         run: npm install
 
       - name: Build Web App
         run: |
-          npm run build:web || {
-            # Fallback: If expo export fails, create a simple web version
+          if npm run build:web; then
+            echo "expo export succeeded"
+          else
+            echo "::warning::expo export failed, using fallback index.html"
             mkdir -p dist
-            cat > dist/index.html << 'EOF'
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>TaskFlow - Todo App</title>
-                <style>
-                    * { margin: 0; padding: 0; box-sizing: border-box; }
-                    body {
-                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        min-height: 100vh;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding: 20px;
-                    }
-                    .container {
-                        background: white;
-                        border-radius: 20px;
-                        padding: 40px;
-                        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-                        max-width: 500px;
-                        width: 100%;
-                    }
-                    h1 {
-                        color: #3B82F6;
-                        margin-bottom: 20px;
-                        font-size: 32px;
-                    }
-                    .info {
-                        color: #64748b;
-                        margin-bottom: 25px;
-                        line-height: 1.6;
-                    }
-                    .button {
-                        display: inline-block;
-                        background: #3B82F6;
-                        color: white;
-                        padding: 12px 24px;
-                        border-radius: 10px;
-                        text-decoration: none;
-                        font-weight: 600;
-                        margin-right: 10px;
-                        transition: transform 0.2s;
-                    }
-                    .button:hover {
-                        transform: translateY(-2px);
-                        background: #2563eb;
-                    }
-                    .button-secondary {
-                        background: #64748b;
-                    }
-                    .button-secondary:hover {
-                        background: #475569;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <h1>📱 TaskFlow</h1>
-                    <div class="info">
-                        <p><strong>Welcome to TaskFlow!</strong></p>
-                        <p>This is a beautiful todo app built with React Native & Expo.</p>
-                        <p><strong>To use the full app:</strong></p>
-                        <p>1. Run locally with <code>npm start</code> and use Expo Go</p>
-                        <p>2. Or build the APK with the instructions in the repo</p>
-                    </div>
-                    <a href="https://github.com/badhope/TaskFlow" class="button" target="_blank">
-                        View on GitHub
-                    </a>
-                    <a href="https://expo.dev/" class="button button-secondary" target="_blank">
-                        Learn Expo
-                    </a>
-                </div>
-            </body>
-            </html>
-            EOF
-          }
+            cp scripts/fallback-index.html dist/index.html
+          fi
+
+      - name: Inject no-cache meta + cache-buster into index.html
+        run: |
+          if [ ! -f dist/index.html ]; then
+            echo "::error::dist/index.html does not exist"
+            ls -la dist/ 2>/dev/null || echo "no dist dir"
+            exit 1
+          fi
+          echo "=== BEFORE ==="
+          head -20 dist/index.html
+          echo ""
+          echo "=== RUNNING INLINE NODE SCRIPT ==="
+          node -e "
+            const fs = require('fs');
+            const path = 'dist/index.html';
+            const ts = String(Date.now());
+            let html = fs.readFileSync(path, 'utf8');
+            const metaTags = [
+              '<meta http-equiv=\"Cache-Control\" content=\"no-cache, no-store, must-revalidate\">',
+              '<meta http-equiv=\"Pragma\" content=\"no-cache\">',
+              '<meta http-equiv=\"Expires\" content=\"0\">',
+              '<meta name=\"build-timestamp\" content=\"' + ts + '\">',
+            ].join('\n  ');
+            html = html.replace(/<head>/i, '<head>\n  ' + metaTags);
+            html = html.replace(/(src|href)=\"(\/TaskFlow\/(?:_expo|assets)\/[^\"]+)\"/g, (m, attr, url) => {
+              if (url.includes('?v=')) return m;
+              const sep = url.includes('?') ? '&' : '?';
+              return attr + '=\"' + url + sep + 'v=' + ts + '\"';
+            });
+            fs.writeFileSync(path, html);
+            console.log('OK, ts=' + ts);
+          "
+          echo "=== AFTER ==="
+          head -20 dist/index.html
+          echo "=== SCRIPT TAG ==="
+          grep -E 'script src' dist/index.html || echo "NO SCRIPT TAG"
+
+      - name: Verify dist exists
+        run: |
+          if [ ! -f dist/index.html ]; then
+            echo "::error::dist/index.html missing after build"
+            exit 1
+          fi
+          echo "dist size: $(du -sh dist | cut -f1)"
+          echo "first 5 entries:"
+          ls -la dist | head -5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -135,7 +102,7 @@ jobs:
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
+
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
