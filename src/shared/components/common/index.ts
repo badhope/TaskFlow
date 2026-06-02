@@ -22,3 +22,5 @@ export { DraggableList, type DraggableItem, type DraggableListProps } from './Dr
 export { WhiteNoisePlayer, type NoiseTrack, type WhiteNoisePlayerHandle } from './WhiteNoisePlayer';
 export { MentionInput, type MentionUser, type MentionEntity, parseMentions, renderMentionText } from './MentionInput';
 export { TaskSuggestions, type TaskSuggestion } from './TaskSuggestions';
+export { SideDrawer, type DrawerItem, type SideDrawerProps } from './SideDrawer';
+export { CollapsibleSection } from './CollapsibleSection';

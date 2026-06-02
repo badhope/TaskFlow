@@ -26,6 +26,9 @@ import {
   DraggableList,
   TaskSuggestions,
   type TaskSuggestion,
+  SideDrawer,
+  type DrawerItem,
+  CollapsibleSection,
 } from '../src/shared/components/common';
 import { useBulkSelection } from '../src/shared/hooks/useBulkSelection';
 import { undoDeleteTask } from '../src/shared/hooks/useUndo';
@@ -57,6 +60,7 @@ export default function HomeScreen() {
   const [focusTaskTitle, setFocusTaskTitle] = useState<string | undefined>(undefined);
   const [showReorder, setShowReorder] = useState(false);
   const [reorderList, setReorderList] = useState<Task[]>([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -263,35 +267,19 @@ export default function HomeScreen() {
         </View>
         <View style={styles.headerActions}>
           <TouchableOpacity
-            style={[styles.iconButton, { backgroundColor: theme.colors.primary + '14', borderColor: theme.colors.primary + '30' }]}
-            onPress={() => {
-              const nextTask = sortedTasks.find((t) => !t.completed);
-              setFocusTaskTitle(nextTask?.title);
-              setShowFocus(true);
-            }}
-            activeOpacity={0.7}
-          >
-            <MaterialIcons name="self-improvement" size={20} color={theme.colors.primary} />
-          </TouchableOpacity>
-          <TouchableOpacity
             style={[styles.iconButton, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
-            onPress={openReorder}
+            onPress={() => setDrawerOpen(true)}
             activeOpacity={0.7}
-            accessibilityLabel="重排任务"
+            accessibilityLabel="打开导航抽屉"
+            accessibilityRole="button"
           >
-            <MaterialIcons name="swap-vert" size={20} color={theme.colors.text} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.iconButton, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
-            onPress={() => navigation.navigate('Search')}
-            activeOpacity={0.7}
-          >
-            <MaterialIcons name="search" size={20} color={theme.colors.text} />
+            <MaterialIcons name="menu" size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.iconButton, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
             onPress={() => navigation.navigate('Settings')}
             activeOpacity={0.7}
+            accessibilityLabel="设置"
           >
             <MaterialIcons name="settings" size={20} color={theme.colors.text} />
           </TouchableOpacity>
@@ -322,45 +310,55 @@ export default function HomeScreen() {
       ? Math.round((completedCount / (pendingCount + completedCount)) * 100)
       : 0;
     return (
-      <View style={styles.statsRow}>
-        <TouchableOpacity
-          style={[styles.statCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
-          activeOpacity={0.85}
-        >
-          <View style={[styles.statIconWrap, { backgroundColor: theme.colors.primary + '14' }]}>
-            <MaterialIcons name="schedule" size={18} color={theme.colors.primary} />
-          </View>
-          <View style={styles.statTextWrap}>
-            <Text style={[styles.statNumber, { color: theme.colors.text }]}>{pendingCount}</Text>
-            <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>待完成</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.statCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
-          activeOpacity={0.85}
-        >
-          <View style={[styles.statIconWrap, { backgroundColor: theme.colors.success + '14' }]}>
-            <MaterialIcons name="check-circle" size={18} color={theme.colors.success} />
-          </View>
-          <View style={styles.statTextWrap}>
-            <Text style={[styles.statNumber, { color: theme.colors.text }]}>{completedCount}</Text>
-            <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>已完成</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.statCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
-          onPress={() => navigation.navigate('Analytics')}
-          activeOpacity={0.85}
-        >
-          <View style={[styles.statIconWrap, { backgroundColor: theme.colors.accent + '14' }]}>
-            <Ionicons name="stats-chart" size={18} color={theme.colors.accent} />
-          </View>
-          <View style={styles.statTextWrap}>
-            <Text style={[styles.statNumber, { color: theme.colors.text }]}>{completionPercent}<Text style={styles.statPercent}>%</Text></Text>
-            <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>完成率</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <CollapsibleSection
+        title="今日概览"
+        subtitle={`${pendingCount} 待办 · ${completedCount} 已完成 · ${completionPercent}% 完成率`}
+        icon="insights"
+        iconColor={theme.colors.primary}
+        defaultExpanded={false}
+        theme={theme}
+        compact
+      >
+        <View style={styles.statsRow}>
+          <TouchableOpacity
+            style={[styles.statCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
+            activeOpacity={0.85}
+          >
+            <View style={[styles.statIconWrap, { backgroundColor: theme.colors.primary + '14' }]}>
+              <MaterialIcons name="schedule" size={18} color={theme.colors.primary} />
+            </View>
+            <View style={styles.statTextWrap}>
+              <Text style={[styles.statNumber, { color: theme.colors.text }]}>{pendingCount}</Text>
+              <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>待完成</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.statCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
+            activeOpacity={0.85}
+          >
+            <View style={[styles.statIconWrap, { backgroundColor: theme.colors.success + '14' }]}>
+              <MaterialIcons name="check-circle" size={18} color={theme.colors.success} />
+            </View>
+            <View style={styles.statTextWrap}>
+              <Text style={[styles.statNumber, { color: theme.colors.text }]}>{completedCount}</Text>
+              <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>已完成</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.statCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
+            onPress={() => navigation.navigate('Analytics')}
+            activeOpacity={0.85}
+          >
+            <View style={[styles.statIconWrap, { backgroundColor: theme.colors.accent + '14' }]}>
+              <Ionicons name="stats-chart" size={18} color={theme.colors.accent} />
+            </View>
+            <View style={styles.statTextWrap}>
+              <Text style={[styles.statNumber, { color: theme.colors.text }]}>{completionPercent}<Text style={styles.statPercent}>%</Text></Text>
+              <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>完成率</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </CollapsibleSection>
     );
   }, [pendingCount, completedCount, theme, navigation]);
 
@@ -424,60 +422,81 @@ export default function HomeScreen() {
   ), [selectedCategory, categories, theme, setSelectedCategory]);
 
   const renderQuickActions = useCallback(() => (
-    <View style={styles.quickActionsGrid}>
-      {[
-        { icon: 'calendar-today', label: '日历', color: theme.colors.primary, bg: theme.colors.primary + '14', target: 'Calendar' },
-        { icon: 'folder', label: '项目', color: theme.colors.secondary, bg: theme.colors.secondary + '14', target: 'Projects' },
-        { icon: 'gps-fixed', label: '目标', color: theme.colors.success, bg: theme.colors.success + '14', target: 'Goals' },
-        { icon: 'sync', label: '习惯', color: theme.colors.warning, bg: theme.colors.warning + '14', target: 'Habits' },
-        { icon: 'edit', label: '笔记', color: theme.colors.info, bg: theme.colors.info + '14', target: 'Notes' },
-        { icon: 'analytics', label: '统计', color: theme.colors.accent, bg: theme.colors.accent + '14', target: 'Analytics' },
-      ].map((item) => (
-        <TouchableOpacity
-          key={item.label}
-          style={[styles.quickAction, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
-          onPress={() => navigation.navigate(item.target as any)}
-          activeOpacity={0.7}
-        >
-          <View style={[styles.quickActionIcon, { backgroundColor: item.bg }]}>
-            <MaterialIcons name={item.icon as any} size={20} color={item.color} />
-          </View>
-          <Text style={[styles.quickActionText, { color: theme.colors.text }]}>{item.label}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  ), [theme, navigation]);
-
-  const renderMoreFeatures = useCallback(() => (
-    <View style={styles.moreSection}>
-      <View style={styles.moreSectionHeader}>
-        <Text style={[styles.moreSectionTitle, { color: theme.colors.textSecondary }]}>更多</Text>
-      </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.chipRow}
-      >
+    <CollapsibleSection
+      title="快速导航"
+      subtitle="日历 · 项目 · 目标 · 习惯"
+      icon="bolt"
+      iconColor={theme.colors.warning}
+      defaultExpanded={true}
+      theme={theme}
+      compact
+    >
+      <View style={styles.quickActionsGrid}>
         {[
-          { icon: 'label', label: '分类', color: theme.colors.secondary, target: 'Categories' },
-          { icon: 'local-offer', label: '标签', color: theme.colors.warning, target: 'Tags' },
-          { icon: 'view-list', label: '视图', color: theme.colors.info, target: 'Views' },
-          { icon: 'file-copy', label: '模板', color: theme.colors.success, target: 'Templates' },
-          { icon: 'auto-awesome', label: '自动化', color: theme.colors.primary, target: 'Automation' },
+          { icon: 'calendar-today', label: '日历', color: theme.colors.primary, bg: theme.colors.primary + '14', target: 'Calendar' },
+          { icon: 'folder', label: '项目', color: theme.colors.secondary, bg: theme.colors.secondary + '14', target: 'Projects' },
+          { icon: 'gps-fixed', label: '目标', color: theme.colors.success, bg: theme.colors.success + '14', target: 'Goals' },
+          { icon: 'sync', label: '习惯', color: theme.colors.warning, bg: theme.colors.warning + '14', target: 'Habits' },
         ].map((item) => (
           <TouchableOpacity
             key={item.label}
-            style={[styles.chip, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
+            style={[styles.quickAction, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
             onPress={() => navigation.navigate(item.target as any)}
             activeOpacity={0.7}
           >
-            <MaterialIcons name={item.icon as any} size={14} color={item.color} style={styles.chipIcon} />
-            <Text style={[styles.chipText, { color: theme.colors.text }]}>{item.label}</Text>
+            <View style={[styles.quickActionIcon, { backgroundColor: item.bg }]}>
+              <MaterialIcons name={item.icon as any} size={20} color={item.color} />
+            </View>
+            <Text style={[styles.quickActionText, { color: theme.colors.text }]}>{item.label}</Text>
           </TouchableOpacity>
         ))}
-      </ScrollView>
-    </View>
+      </View>
+      <TouchableOpacity
+        style={[styles.moreFeaturesLink, { backgroundColor: theme.colors.primary + '08', borderColor: theme.colors.primary + '30' }]}
+        onPress={() => setDrawerOpen(true)}
+        activeOpacity={0.7}
+      >
+        <MaterialIcons name="apps" size={16} color={theme.colors.primary} />
+        <Text style={[styles.moreFeaturesLinkText, { color: theme.colors.primary }]}>
+          查看全部功能（日历 · 项目 · 笔记 · 统计 · 标签 · 模板 ...）
+        </Text>
+        <MaterialIcons name="chevron-right" size={16} color={theme.colors.primary} />
+      </TouchableOpacity>
+    </CollapsibleSection>
   ), [theme, navigation]);
+
+  const drawerItems: DrawerItem[] = useMemo(() => [
+    { key: 'search', icon: 'search', label: '搜索', description: '全文搜索任务', color: theme.colors.text, target: 'Search', group: 'tool' as const },
+    { key: 'reorder', icon: 'swap-vert', label: '重排任务', description: '拖拽排序', color: theme.colors.text, target: 'reorder', group: 'tool' as const },
+    { key: 'focus', icon: 'self-improvement', label: '专注模式', description: 'Forest 风格 + 白噪声', color: theme.colors.primary, target: 'focus', group: 'tool' as const },
+    { key: 'settings', icon: 'settings', label: '设置', description: '主题、通知、主题', color: theme.colors.textSecondary, target: 'Settings', group: 'tool' as const },
+
+    { key: 'calendar', icon: 'calendar-today', label: '日历视图', description: '按日期查看任务', color: theme.colors.primary, target: 'Calendar', group: 'organize' as const },
+    { key: 'projects', icon: 'folder', label: '项目', description: '多项目分组管理', color: theme.colors.secondary, target: 'Projects', group: 'organize' as const },
+    { key: 'goals', icon: 'gps-fixed', label: '目标', description: '长期目标追踪', color: theme.colors.success, target: 'Goals', group: 'organize' as const },
+    { key: 'habits', icon: 'sync', label: '习惯', description: '每日打卡', color: theme.colors.warning, target: 'Habits', group: 'organize' as const },
+    { key: 'notes', icon: 'edit-note', label: '笔记', description: 'Markdown 富文本', color: theme.colors.info, target: 'Notes', group: 'organize' as const },
+
+    { key: 'analytics', icon: 'analytics', label: '统计分析', description: '完成率、趋势', color: theme.colors.accent, target: 'Analytics', group: 'insight' as const },
+
+    { key: 'categories', icon: 'label', label: '分类管理', description: '管理任务分类', color: theme.colors.secondary, target: 'Categories', group: 'manage' as const },
+    { key: 'tags', icon: 'local-offer', label: '标签', description: '灵活标记', color: theme.colors.warning, target: 'Tags', group: 'manage' as const },
+    { key: 'views', icon: 'view-list', label: '视图', description: '看板 / 列表 / 日历', color: theme.colors.info, target: 'Views', group: 'manage' as const },
+    { key: 'templates', icon: 'file-copy', label: '模板', description: '复用任务模板', color: theme.colors.success, target: 'Templates', group: 'manage' as const },
+    { key: 'automation', icon: 'auto-awesome', label: '自动化', description: 'AI 任务建议', color: theme.colors.primary, target: 'Automation', group: 'manage' as const },
+  ], [theme]);
+
+  const handleDrawerNavigate = useCallback((target: string) => {
+    if (target === 'reorder') {
+      openReorder();
+    } else if (target === 'focus') {
+      const nextTask = sortedTasks.find((t) => !t.completed);
+      setFocusTaskTitle(nextTask?.title);
+      setShowFocus(true);
+    } else {
+      navigation.navigate(target as any);
+    }
+  }, [navigation, sortedTasks, openReorder]);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -501,7 +520,6 @@ export default function HomeScreen() {
             <TaskSuggestions onApply={handleApplySuggestion} />
             {renderQuickActions()}
             {renderCategories()}
-            {renderMoreFeatures()}
           </>
         }
         ListEmptyComponent={
@@ -629,6 +647,15 @@ export default function HomeScreen() {
           </ScrollView>
         </SafeAreaView>
       </Modal>
+      <SideDrawer
+        visible={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        items={drawerItems}
+        onNavigate={handleDrawerNavigate}
+        pendingCount={pendingCount}
+        completedToday={completedCount}
+        theme={theme}
+      />
     </SafeAreaView>
   );
 }
@@ -673,6 +700,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: StyleSheet.hairlineWidth,
+  },
+  moreFeaturesLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginTop: 8,
+    gap: 8,
+  },
+  moreFeaturesLinkText: {
+    flex: 1,
+    fontSize: 12,
+    fontWeight: '600',
   },
   searchBar: {
     flexDirection: 'row',
