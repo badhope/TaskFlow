@@ -1,118 +1,80 @@
-# 🤝 贡献指南
+# Contributing
 
-感谢您对 TaskFlow 项目的关注！我们欢迎各种形式的贡献。
+I work on this in my spare time and welcome outside help.
 
----
+## What I need
 
-## 📋 贡献方式
+- Bug reports with a minimal reproduction (a screen recording goes a
+  long way).
+- Pull requests for clear bugs. For new features, open an issue first
+  so we can argue about the design before you spend a weekend on it.
+- Documentation fixes are always welcome. Typos, broken links, missing
+  context — send them.
 
-您可以通过以下方式贡献：
-- 报告 Bug
-- 提出功能建议
-- 提交代码改进
-- 改进文档
-- 回答 Issue 中的问题
+## What I don't need
 
----
+- Rewrites in a different framework.
+- Lint wars. If you find a real bug, fix it; don't open a PR with 47
+  formatting changes.
+- Drive-by refactors of files you touched for a one-line fix.
 
-## 🐛 报告 Bug
-
-在报告 Bug 前，请先检查：
-1. 是否已存在类似 Issue
-2. 是否是最新版本的代码
-
-报告 Bug 时请提供：
-- 清晰的标题和描述
-- 复现步骤
-- 预期行为与实际行为
-- 屏幕截图（如适用）
-- 您的环境信息（系统、Node 版本等）
-
----
-
-## ✨ 功能建议
-
-提出功能建议时请说明：
-- 功能是什么
-- 为什么需要这个功能
-- 它如何改善使用体验
-- （可选）实现思路
-
----
-
-## 💻 提交代码
-
-### 开发环境设置
+## Local setup
 
 ```bash
-# 1. Fork 仓库
-
-# 2. Clone 你的 Fork
-git clone https://github.com/你的用户名/TaskFlow.git
+git clone https://github.com/badhope/TaskFlow
 cd TaskFlow
-
-# 3. 安装依赖
 npm install
-
-# 4. 启动开发服务器
-npm start
+npm run web        # fastest path — http://localhost:8081
+npm run typecheck  # should be 0 errors
+npm run lint       # should be 0 errors (warnings OK)
 ```
 
-### 代码规范
+Node 18 or later. I develop on whatever the current LTS is, so older
+versions are not tested.
 
-项目使用 TypeScript，请确保：
-1. 所有代码通过 `npx tsc --noEmit` 类型检查
-2. 遵循现有代码风格
-3. 组件使用 `React.memo` 优化性能
-4. 使用 `@expo/vector-icons` 替代 emoji 图标
-5. 所有类型定义在 `src/shared/types/`
+## Commit messages
 
-### Git 提交信息
+I don't enforce conventional commits. Write whatever you'd write if
+nobody was watching. Some recent ones for the style:
 
-提交信息请遵循以下格式：
-```
-<类型>: <简短描述>
+- `polish: a11y, error boundary, and a less-AI-feeling README`
+- `cache-buster was corrupting URLs in `src/` paths; switched to python`
+- `add tasks with the same title at the same minute shouldn't crash`
 
-<详细描述> (可选)
-```
+No more than one short subject line, blank line, then a paragraph or
+two if the diff is non-obvious. If the PR fixes an issue, the issue
+number at the end is fine.
 
-类型选项：
-- `feat`: 新功能
-- `fix`: 修复 Bug
-- `docs`: 文档更新
-- `style`: 格式调整（不影响代码运行）
-- `refactor`: 重构
-- `perf`: 性能优化
-- `test`: 测试相关
-- `chore`: 构建/工具链相关
+## Code style
 
-### Pull Request 流程
+TypeScript strict mode is on. The lint config is in `eslint.config.js`;
+the rules are pragmatic, not the React/recommended set with every
+warning turned into an error. If you want to add a rule, justify it
+in the PR.
 
-1. 从 `main` 创建新分支
-2. 实现你的更改
-3. 确保所有检查通过
-4. 提交 Pull Request
-5. 等待 Code Review
-6. 合并！
+Components that render in a list should be wrapped in `React.memo`.
+The rest is judgement.
 
----
+## Where to put things
 
-## 📝 改进文档
+| New...                   | Goes in                                  |
+|--------------------------|------------------------------------------|
+| Route / page             | `screens/`                               |
+| Generic UI primitive     | `src/shared/components/common/`          |
+| New non-list view        | `src/shared/components/views/`           |
+| Stateful reusable logic  | `src/shared/hooks/`                      |
+| New persisted shape      | `src/shared/types/index.ts` + the store  |
+| Theme color / token      | both light + dark presets in the store   |
 
-文档改进也是非常重要的贡献！您可以：
-- 修复文档错误
-- 补充缺失内容
-- 优化文档结构
-- 翻译文档（欢迎多语言！）
+## Pull request process
 
----
+1. Branch from `main`. Name it whatever, I don't care.
+2. Run `npm run typecheck && npm run lint` before pushing.
+3. In the PR description, link the issue (if any) and a one-line
+   summary of what changed and why.
+4. Be patient. I'll get to it.
 
-## 📄 许可证
+## Code of conduct
 
-通过贡献代码，您同意您的贡献将按照项目的 [LICENSE](LICENSE) 许可发布。
-
----
-
-## 🙏 感谢
-
-再次感谢您对 TaskFlow 的贡献！
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — short version: be a decent
+human.

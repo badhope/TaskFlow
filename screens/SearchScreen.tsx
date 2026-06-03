@@ -35,6 +35,9 @@ export default function SearchScreen() {
     projects,
     categories,
     tags,
+    searchHistory,
+    addSearchToHistory,
+    clearSearchHistory: clearSearchHistoryFromStore,
   } = useAppStore();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,7 +46,6 @@ export default function SearchScreen() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [showFilters, setShowFilters] = useState(false);
   const [showSortOptions, setShowSortOptions] = useState(false);
-  const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [recentTasks, setRecentTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -197,8 +199,8 @@ export default function SearchScreen() {
   };
 
   const saveSearchToHistory = () => {
-    if (searchQuery.trim() && !searchHistory.includes(searchQuery)) {
-      setSearchHistory([searchQuery, ...searchHistory.slice(0, 9)]);
+    if (searchQuery.trim()) {
+      addSearchToHistory(searchQuery);
     }
   };
 
@@ -207,7 +209,7 @@ export default function SearchScreen() {
   };
 
   const clearSearchHistory = () => {
-    setSearchHistory([]);
+    clearSearchHistoryFromStore();
   };
 
   const getFieldLabel = (field: string): string => {

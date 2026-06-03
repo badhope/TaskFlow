@@ -126,6 +126,10 @@ export const Button = React.memo(function Button({
       ]}
       disabled={disabled || loading}
       activeOpacity={0.7}
+      accessible
+      accessibilityRole="button"
+      accessibilityState={{ disabled: !!disabled || loading, busy: loading }}
+      accessibilityLabel={typeof title === 'string' ? title : undefined}
       {...props}
     >
       {loading ? (

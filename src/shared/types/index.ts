@@ -1,8 +1,6 @@
-// ============================================
-// TaskFlow - Comprehensive Type Definitions
-// ============================================
+// TaskFlow type definitions. All persisted shapes live here so the store,
+// components and (eventual) sync layer can be type-checked in one place.
 
-// Base Types
 export type Priority = 'low' | 'medium' | 'high' | 'urgent' | 'critical';
 export type TaskStatus = 'todo' | 'in-progress' | 'waiting' | 'delegated' | 'completed' | 'cancelled' | 'on-hold';
 export type ProjectStatus = 'active' | 'completed' | 'paused' | 'archived';
@@ -27,9 +25,7 @@ export type TemplateType = 'task' | 'project' | 'note' | 'habit' | 'workflow';
 export type AutomationTriggerType = 'task-created' | 'task-updated' | 'task-completed' | 'task-overdue' | 'due-date-approaching' | 'scheduled' | 'manual' | 'webhook';
 export type AutomationActionType = 'update-field' | 'add-tag' | 'remove-tag' | 'move-project' | 'assign' | 'send-notification' | 'create-subtask' | 'duplicate' | 'archive' | 'webhook' | 'custom';
 
-// ============================================
 // Core Task Interface
-// ============================================
 export interface Task {
   id: string;
   title: string;
@@ -77,9 +73,7 @@ export interface Task {
   deletedAt: Date | null;
 }
 
-// ============================================
 // Task Related Interfaces
-// ============================================
 export interface RecurrenceRule {
   type: RecurrenceType;
   interval: number;
@@ -196,9 +190,7 @@ export interface ChecklistItem {
   createdAt: Date;
 }
 
-// ============================================
 // Project System
-// ============================================
 export interface Project {
   id: string;
   name: string;
@@ -268,9 +260,7 @@ export interface ProjectCustomField {
   width: number;
 }
 
-// ============================================
 // Category System
-// ============================================
 export interface Category {
   id: string;
   name: string;
@@ -288,9 +278,7 @@ export interface Category {
   projectId?: string | null;
 }
 
-// ============================================
 // Tag System
-// ============================================
 export interface Tag {
   id: string;
   name: string;
@@ -311,9 +299,7 @@ export interface TagGroup {
   createdAt: Date;
 }
 
-// ============================================
 // Calendar System
-// ============================================
 export interface Calendar {
   id: string;
   name: string;
@@ -352,9 +338,7 @@ export interface CalendarEvent {
   updatedAt: Date;
 }
 
-// ============================================
 // Reminder System
-// ============================================
 export interface Reminder {
   id: string;
   taskId: string;
@@ -418,9 +402,7 @@ export interface NotificationChannel {
   filters: string[];
 }
 
-// ============================================
 // View System
-// ============================================
 export interface View {
   id: string;
   name: string;
@@ -509,9 +491,7 @@ export interface GanttConfig {
   workDaysOnly: boolean;
 }
 
-// ============================================
 // User System
-// ============================================
 export interface User {
   id: string;
   email: string;
@@ -636,9 +616,7 @@ export interface LanguageSettings {
   currency: string;
 }
 
-// ============================================
 // Accessibility
-// ============================================
 export interface AccessibilitySettings {
   screenReaderEnabled: boolean;
   highContrastMode: boolean;
@@ -673,9 +651,7 @@ export interface FocusSession {
   completed: boolean;
 }
 
-// ============================================
 // Goals & Habits
-// ============================================
 export interface Goal {
   id: string;
   title: string;
@@ -763,9 +739,7 @@ export interface HabitFrequency {
   specificDays?: number[];
 }
 
-// ============================================
 // Analytics
-// ============================================
 export interface DashboardStats {
   overview: OverviewStats;
   productivity: ProductivityStats;
@@ -871,9 +845,7 @@ export interface HabitStats {
   averageDuration: number | null;
 }
 
-// ============================================
 // Automation
-// ============================================
 export interface AutomationRule {
   id: string;
   name: string;
@@ -921,9 +893,7 @@ export interface AutomationAction {
   order: number;
 }
 
-// ============================================
 // Templates
-// ============================================
 export interface Template {
   id: string;
   name: string;
@@ -956,9 +926,7 @@ export interface TemplateVariable {
   helpText?: string;
 }
 
-// ============================================
 // Collaboration
-// ============================================
 export interface Team {
   id: string;
   name: string;
@@ -1019,9 +987,7 @@ export interface Activity {
   createdAt: Date;
 }
 
-// ============================================
 // Sync & Backup
-// ============================================
 export interface SyncConfig {
   enabled: boolean;
   provider: SyncProvider;
@@ -1073,9 +1039,7 @@ export interface Backup {
   storage: 'local' | 'cloud' | 'both';
 }
 
-// ============================================
 // Search
-// ============================================
 export interface SearchQuery {
   text: string;
   filters: SearchFilter[];
@@ -1117,9 +1081,7 @@ export interface SavedSearch {
   updatedAt: Date;
 }
 
-// ============================================
 // AI
-// ============================================
 export interface AISuggestion {
   id: string;
   type: 'task-suggestion' | 'priority-suggestion' | 'schedule-suggestion' | 'summary' | 'brainstorm' | 'rewrite' | 'analyze';
@@ -1157,9 +1119,7 @@ export interface AICapabilities {
   naturalLanguageProcessing: boolean;
 }
 
-// ============================================
 // Theme
-// ============================================
 export interface ThemePreset {
   id: string;
   name: string;
@@ -1281,9 +1241,7 @@ export interface ShadowSettings {
   ring: string;
 }
 
-// ============================================
 // Navigation
-// ============================================
 export type MainTabParamList = {
   HomeTab: undefined;
   CalendarTab: undefined;
@@ -1368,9 +1326,7 @@ export type RootStackParamList = {
   Views: undefined;
 };
 
-// ============================================
 // Utility Types
-// ============================================
 export interface PaginationParams {
   page: number;
   limit: number;

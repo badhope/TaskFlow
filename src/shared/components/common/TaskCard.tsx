@@ -94,6 +94,9 @@ export const TaskCard = React.memo(function TaskCard({
         ]}
         onPress={onPress}
         activeOpacity={0.7}
+        accessible
+        accessibilityRole="button"
+        accessibilityLabel={`任务：${task.title}，${task.completed ? '已完成' : '未完成'}，优先级：${PRIORITY_LABEL[task.priority]}`}
       >
         {showCheckbox && (
           <TouchableOpacity
@@ -106,6 +109,10 @@ export const TaskCard = React.memo(function TaskCard({
             ]}
             onPress={() => onToggleComplete?.(task.id)}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            accessible
+            accessibilityRole="checkbox"
+            accessibilityState={{ checked: task.completed }}
+            accessibilityLabel={task.completed ? '标记为未完成' : '标记为已完成'}
           >
             {task.completed && <MaterialIcons name="check" size={14} color="#FFFFFF" />}
           </TouchableOpacity>

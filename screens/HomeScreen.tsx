@@ -63,7 +63,10 @@ export default function HomeScreen() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
+    // Load once on mount; loadData is stable from the store and we don't
+    // want to refetch on every store change (would re-render the list).
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onRefresh = useCallback(async () => {

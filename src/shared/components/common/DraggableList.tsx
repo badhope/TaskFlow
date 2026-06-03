@@ -63,6 +63,10 @@ export function DraggableList<T extends DraggableItem>({
   const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const itemRefs = useRef<Map<string, View>>(new Map());
 
+  // Re-sync the local visual order from props when not dragging. We keep a
+  // local copy during a drag (so the animation can render the moving row
+  // without round-tripping the store on every frame) and only push the
+  // final order up via onReorder.
   useEffect(() => {
     if (!activeId) setOrderedData(data);
   }, [data, activeId]);

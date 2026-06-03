@@ -1,133 +1,80 @@
-# 📱 Build TaskFlow APK
+# Building an APK
 
-Three ways to get your APK file!
+Two paths. Pick by how much setup you want to do.
 
----
+## EAS Build (cloud)
 
-## 🚀 Option 1: EAS Build (Recommended!)
+This is what I use. No local toolchain needed.
 
-The easiest way to get your APK - uses Expo's cloud build service!
-
-### Step 1: Sign up for Expo
-1. Go to https://expo.dev/
-2. Sign up or log in with GitHub
-
-### Step 2: Install EAS CLI
 ```bash
 npm install -g eas-cli
-```
-
-### Step 3: Login
-```bash
 eas login
-```
-
-### Step 4: Configure Project
-```bash
-eas build:configure
-```
-
-### Step 5: Build APK!
-```bash
-# Build a preview APK (installable directly)
+eas build:configure          # one-time, creates eas.json
 eas build --platform android --profile preview
 ```
 
-### Step 6: Download
-When build finishes, you'll get a download link!
+The first command does a one-time Expo CLI install and login. The
+`build:configure` step generates an `eas.json` if you don't have one
+(you do, the repo includes one). The `build` step uploads your
+source to Expo's build farm, runs Gradle, and gives you a download
+link when it finishes. ~10 minutes.
 
----
+You need an Expo account (free) but not a paid Apple/Google
+developer account for Android preview builds.
 
-## 💻 Option 2: Local Build (No Account Needed!)
+## Local Gradle
 
-Build APK on your own computer!
+If you'd rather build on your own machine:
 
-### Prerequisites
-- **Java Development Kit (JDK) 17 or higher**
-- **Node.js 18 or higher**
-- **Android Studio (optional but helpful)**
+**Prereqs:** JDK 17, Android SDK (any version ≥ 34), and optionally
+Android Studio. On macOS, `brew install --cask zulu@17` plus Android
+Studio handles it.
 
-### Step 1: Install Dependencies
 ```bash
-cd /workspace
 npm install
-```
-
-### Step 2: Prebuild Android Project
-```bash
-npx expo prebuild --platform android
-```
-
-### Step 3: Build APK
-```bash
+npx expo prebuild --platform android    # one-time, writes android/
 cd android
-
-# Linux/Mac
-chmod +x gradlew
 ./gradlew assembleDebug
-
-# Windows
-gradlew.bat assembleDebug
 ```
 
-### Step 4: Find Your APK!
-The APK will be at:
-```
-android/app/build/outputs/apk/debug/app-debug.apk
-```
+The APK lands at `android/app/build/outputs/apk/debug/app-debug.apk`.
+This is a **debug** build signed with the default debug key — fine
+for sideloading, won't pass Play Store review. For a release build
+you'll need to set up a signing config in `android/app/build.gradle`
+and run `assembleRelease` instead.
 
----
+The first build downloads Gradle, the Android Gradle Plugin, and all
+the dependency packages, so it can take 15-20 minutes on a cold
+cache. Subsequent builds are much faster.
 
-## 🔧 Option 3: GitHub Actions Build (No Account Needed!)
+## iOS
 
-I'll configure GitHub Actions to build for you!
+Same idea but Xcode required (macOS only). `eas build --platform
+ios --profile preview` is the path of least resistance. Local
+builds need a real Apple Developer signing identity.
 
-Just visit:
-https://github.com/badhope/TaskFlow/actions
+## Verifying the build before you commit to it
 
-And manually run the workflow.
-
----
-
-## 📁 What You'll Get
-
-When you build:
-
-```
-APK File: app-debug.apk
-Size: ~20-30 MB
-Type: Debug build (installable on any Android device)
-Features: Full TaskFlow app!
+```bash
+npm run typecheck
+npm run lint
+npm run build:web     # web bundle as a smoke test for the Metro config
 ```
 
----
+If those pass locally, the EAS build will pass too.
 
-## 📱 Installing APK
+## Troubleshooting
 
-1. Transfer the APK to your Android device
-2. Open it on your phone
-3. Enable "Unknown Sources" if needed
-4. Install!
-5. Start organizing your tasks! 🎉
+**`expo prebuild` regenerates files I had hand-edited.**
+That's expected. `expo prebuild` is meant to be re-runnable. If you
+need persistent native changes, use a config plugin instead of
+editing `android/` directly.
 
----
+**Gradle download times out.**
+Either try again on a better connection, or use EAS Build, which
+sidesteps this entirely.
 
-## 🔍 Troubleshooting
-
-### Gradle Download Times Out
-If you see "Connection timed out" when downloading Gradle:
-- Try again on a better internet connection
-- Or use Option 1 (EAS Build) - no local setup needed!
-
-### Other Issues
-- Check that you have JDK 17+ installed
-- Verify your JAVA_HOME environment variable is set
-- See QUICK_START.md for more help!
-
----
-
-## 📞 Need Help?
-
-- First try **Option 1 (EAS Build)** - it's easiest!
-- Then try **Option 2 (Local Build)** if you prefer
-- See QUICK_START.md for even more help
+**`adb: no devices/emulators found`.**
+The APK was built; you just don't have a device to install it on.
+Connect an Android phone with USB debugging enabled, or start an
+emulator from Android Studio.

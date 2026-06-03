@@ -15,6 +15,7 @@ import {
 } from './src/shared/types';
 import { useAppStore } from './src/shared/store';
 import { ToastContainer } from './src/shared/components/common/Toast';
+import { ErrorBoundary } from './src/shared/components/common/ErrorBoundary';
 import { QuickAddTask } from './src/shared/components/common/QuickAddTask';
 import { useKeyboardShortcuts } from './src/shared/hooks/useKeyboardShortcuts';
 import HomeScreen from './screens/HomeScreen';
@@ -278,6 +279,7 @@ export default function App() {
   }, [theme.type, theme.colors]);
 
   return (
+    <ErrorBoundary>
     <NavigationContainer theme={navigationTheme}>
       <RootStack.Navigator
         screenOptions={{ headerShown: false }}
@@ -288,6 +290,7 @@ export default function App() {
       <StatusBar style={theme.type === 'dark' ? 'light' : 'dark'} />
       <ToastContainer />
     </NavigationContainer>
+    </ErrorBoundary>
   );
 }
 

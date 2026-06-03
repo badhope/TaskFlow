@@ -45,6 +45,10 @@ interface AppStore {
   logout: () => void;
 
   // Tasks
+  // Kept flat (not normalised) because the dataset is small (<5k tasks
+  // for any realistic user) and FlatList needs the array shape anyway.
+  // If we ever ship a server-backed sync, switch to a Record<id, Task>
+  // index and re-derive the array in a selector.
   tasks: Task[];
   selectedTask: Task | null;
   addTask: (task: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => string;
@@ -243,6 +247,11 @@ interface AppStore {
   sessions: FocusSession[];
   addSession: (session: Omit<FocusSession, 'id'>) => void;
   clearSessions: () => void;
+
+  // UI state (persisted, but not really "data")
+  searchHistory: string[];
+  addSearchToHistory: (query: string) => void;
+  clearSearchHistory: () => void;
 
   // Persistence
   loadData: () => Promise<void>;
@@ -734,6 +743,7 @@ const STORAGE_KEYS = {
   SESSIONS: 'taskflow_sessions',
   USER_PREFERENCES: 'taskflow_user_preferences',
   SIDEBAR_OPEN: 'taskflow_sidebar_open',
+  SEARCH_HISTORY: 'taskflow_search_history',
 };
 
 // Helper functions
@@ -778,6 +788,25 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
   clearSessions: () => {
     set({ sessions: [] });
+    get().saveData();
+  },
+
+  // Search history — kept here (not local useState) so it survives
+  // screen unmounts. Capped at 10 entries to bound storage growth.
+  searchHistory: [],
+
+  addSearchToHistory: (query) => {
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    set((state) => {
+      const filtered = state.searchHistory.filter((q) => q !== trimmed);
+      return { searchHistory: [trimmed, ...filtered].slice(0, 10) };
+    });
+    get().saveData();
+  },
+
+  clearSearchHistory: () => {
+    set({ searchHistory: [] });
     get().saveData();
   },
 
@@ -2224,6 +2253,11 @@ export const useAppStore = create<AppStore>((set, get) => ({
       if (sidebarData) {
         set({ sidebarOpen: JSON.parse(sidebarData) });
       }
+
+      const searchHistoryData = await AsyncStorage.getItem(STORAGE_KEYS.SEARCH_HISTORY);
+      if (searchHistoryData) {
+        set({ searchHistory: JSON.parse(searchHistoryData) });
+      }
     } catch (error) {
       console.error('Error loading data:', error);
     }
@@ -2251,6 +2285,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
         AsyncStorage.setItem(STORAGE_KEYS.SESSIONS, JSON.stringify(state.sessions || [])),
         AsyncStorage.setItem(STORAGE_KEYS.USER_PREFERENCES, JSON.stringify(state.userPreferences)),
         AsyncStorage.setItem(STORAGE_KEYS.SIDEBAR_OPEN, JSON.stringify(state.sidebarOpen)),
+        AsyncStorage.setItem(STORAGE_KEYS.SEARCH_HISTORY, JSON.stringify(state.searchHistory)),
         AsyncStorage.setItem(STORAGE_KEYS.SYNC_CONFIG, JSON.stringify(state.syncConfig)),
       ]);
     } catch (error) {
@@ -2351,6 +2386,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       selectedHabit: null,
       selectedNote: null,
       currentTeam: null,
+      searchHistory: [],
     });
     get().saveData();
   },
