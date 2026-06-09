@@ -7,7 +7,6 @@ authors:
   - family-names: badhope
     given-names: badhope
     alias: badhope
-    orcid: https://orcid.org/0000-0000-0000-0000
 identifiers:
   - type: url
     value: https://github.com/badhope/TaskFlow
@@ -16,6 +15,15 @@ type: software
 url: https://github.com/badhope/TaskFlow
 repository-code: https://github.com/badhope/TaskFlow
 keywords:
-  - open-source, software
+  - ai-suggestions
+  - android
+  - cross-platform
+  - drag-and-drop
+  - expo
+  - focus-mode
+  - gantt
+  - ios
+  - kanban
+  - material-icons
 abstract: >-
-  TaskFlow — A modern, cross-platform (Web / Android / iOS) todo & task management app. AI suggestions, Forest-style focus mode, @ mentions, drag-and-drop, 6 views, strict TypeScript.
+  TaskFlow — my cross-platform todo app (Web / Android / iOS). Pomodoro, AI suggestions (statistical, not magic), drag-and-drop, 6 views, 13 themes. Strict TypeScript end to end.
