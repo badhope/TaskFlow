@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software in academic work, please cite it using the
+  metadata below.
+title: TaskFlow
+authors:
+  - family-names: badhope
+    given-names: badhope
+    alias: badhope
+identifiers:
+  - type: url
+    value: https://github.com/badhope/TaskFlow
+license: MIT
+type: software
+url: https://github.com/badhope/TaskFlow
+repository-code: https://github.com/badhope/TaskFlow
+keywords:
+  - ai-suggestions
+  - android
+  - cross-platform
+  - drag-and-drop
+  - expo
+  - focus-mode
+  - gantt
+  - ios
+  - kanban
+  - material-icons
+abstract: >-
+  TaskFlow — my cross-platform todo app (Web / Android / iOS). Pomodoro, AI suggestions (statistical, not magic), drag-and-drop, 6 views, 13 themes. Strict TypeScript end to end.
