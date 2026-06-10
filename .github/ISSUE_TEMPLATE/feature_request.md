@@ -1,40 +1,25 @@
 ---
-name: Feature Request
-about: 为 TaskFlow 提出一个新功能建议
-title: '[Feature] '
+name: Feature request
+about: Suggest an idea
+title: "[feat] "
 labels: enhancement
-assignees: ''
+assignees: badhope
 ---
 
-## 🚀 功能描述
+## Problem
 
-清晰、简洁地描述你想要的功能。
+<!-- What's the underlying problem or gap? -->
 
-## 💡 动机 / 背景
+## Proposed solution
 
-这个功能解决了什么问题？什么使用场景需要它？
+<!-- Describe the feature you'd like. -->
 
-例如：我在使用 TaskFlow 时经常需要 [...], 但是当前 [...]
+## Alternatives considered
 
-## 🎯 期望行为
+<!-- Other ways you thought about solving this. -->
 
-清晰、简洁地描述你期望发生什么。
+## Willingness to contribute
 
-## 🔄 替代方案
-
-你考虑过的其他替代方案及其优缺点。
-
-## 📸 草图 / 截图
-
-如果可以，附上简单的草图或参考截图。
-
-## 📋 优先级
-
-- [ ] P0 - 必须（核心功能缺失）
-- [ ] P1 - 重要（显著提升体验）
-- [ ] P2 - 一般（锦上添花）
-- [ ] P3 - 可选（Nice to have）
-
-## 📋 额外信息
-
-任何其他相关信息、相关 issue、参考实现等。
+- [ ] I would submit a PR for this
+- [ ] I would test a PR for this
+- [ ] I would only discuss / design

@@ -1,47 +1,40 @@
 ---
-name: Bug Report
-about: 报告一个 bug，帮助我们改进 TaskFlow
-title: '[Bug] '
+name: Bug report
+about: Something is broken
+title: "[bug] "
 labels: bug
-assignees: ''
+assignees: badhope
 ---
 
-## 🐛 Bug 描述
+## Describe the bug
 
-清晰、简洁地描述这个 bug 是什么。
+<!-- A clear and concise description of what the bug is. -->
 
-## 🔄 复现步骤
+## To reproduce
 
-1. 打开 '...'
-2. 点击 '...'
-3. 滚动到 '...'
-4. 看到错误
+```bash
+# Minimal reproduction steps
+```
 
-## ✅ 期望行为
+## Expected behaviour
 
-清晰、简洁地描述你期望发生的事情。
+<!-- What you expected to happen. -->
 
-## ❌ 实际行为
+## Actual behaviour
 
-清晰、简洁地描述实际发生的事情。
+<!-- What actually happened. Include stack traces, error messages,
+screenshots. -->
 
-## 📸 截图
+## Environment
 
-如果可以，添加截图来帮助解释问题。
+- OS: <!-- e.g. macOS 14.4 -->
+- Runtime version: <!-- e.g. Node 20.11, Python 3.11 -->
+- Package version: <!-- git rev-parse HEAD, or npm/pip version -->
+- Date observed: <!-- 2026-06-10 -->
 
-## 🌍 环境
+## Severity
 
-- **平台**: [ ] Web  [ ] Android  [ ] iOS
-- **设备**: 例如 iPhone 14 / Pixel 7 / Chrome 120
-- **OS 版本**: 例如 iOS 17.2 / Android 14 / Windows 11
-- **浏览器** (Web): 例如 Chrome 120 / Safari 17
-- **App 版本**: v1.1.0
-- **Node 版本** (开发): 例如 18.18.0
-
-## 📋 额外信息
-
-添加任何其他关于问题的信息，比如上下文、相关 issue 等。
-
-## 🛠️ 调试信息
-
-请运行 `npx expo-doctor` 并粘贴输出（如果是开发环境问题）。
+- [ ] Blocker — production is down
+- [ ] High — feature unusable
+- [ ] Medium — workaround exists
+- [ ] Low — cosmetic
