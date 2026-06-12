@@ -1,11 +1,14 @@
 """Git 仓库管理器"""
-from pathlib import Path
-from typing import Optional, List, Dict, Any
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 import pygit2
+
+from app.config import settings
 from app.utils.logger import logger
-from app.utils.validator import validate_git_url, validate_file_path
+from app.utils.validator import validate_file_path, validate_git_url
 
 
 @dataclass
@@ -56,7 +59,7 @@ class GitManager:
                         pct = stats.received_objects / stats.total_objects * 100
                         logger.debug(f"克隆进度: {pct:.1f}%")
             
-            repo = pygit2.clone_repository(
+            pygit2.clone_repository(
                 validated_url,
                 str(repo_path),
                 callbacks=CloneProgress()
@@ -143,7 +146,8 @@ class GitManager:
         
         # 获取当前分支的远程跟踪
         branch = repo.head.shorthand
-        remote_name = repo.branches[branch].upstream.remote_name if repo.branches[branch].upstream else "origin"
+        upstream = repo.branches[branch].upstream
+        remote_name = upstream.remote_name if upstream else "origin"
         
         remote = repo.remotes[remote_name]
         remote.fetch()
@@ -165,7 +169,9 @@ class GitManager:
             "remote": remote_name
         }
     
-    def commit_changes(self, repo_path: Path, message: str, files: Optional[List[str]] = None) -> str:
+    def commit_changes(
+        self, repo_path: Path, message: str, files: Optional[List[str]] = None
+    ) -> str:
         """提交更改"""
         repo = self.open_repository(repo_path)
         
@@ -211,5 +217,4 @@ class GitManager:
 
 
 # 全局实例（使用配置的工作空间）
-from app.config import settings
 git_manager = GitManager(settings.git_workspace)

@@ -1,12 +1,14 @@
 """文件自动归档管理器"""
-from pathlib import Path
-from typing import Dict, List, Optional
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import List, Optional
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.models.file import FileMetadata
 from app.utils.logger import logger
-from app.utils.validator import validate_file_path, validate_category
+from app.utils.validator import validate_category, validate_file_path
 
 
 class FileOrganizer:
@@ -14,7 +16,10 @@ class FileOrganizer:
     
     # 默认分类规则
     DEFAULT_CATEGORIES = {
-        "code": [".py", ".js", ".ts", ".jsx", ".tsx", ".java", ".cpp", ".c", ".go", ".rs"],
+        "code": [
+            ".py", ".js", ".ts", ".jsx", ".tsx",
+            ".java", ".cpp", ".c", ".go", ".rs"
+        ],
         "document": [".md", ".txt", ".doc", ".docx", ".pdf", ".rst"],
         "data": [".json", ".xml", ".yaml", ".yml", ".csv", ".sql"],
         "image": [".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"],
@@ -35,7 +40,9 @@ class FileOrganizer:
         
         return "other"
     
-    async def scan_directory(self, directory: Path, recursive: bool = True) -> List[FileMetadata]:
+    async def scan_directory(
+        self, directory: Path, recursive: bool = True
+    ) -> List[FileMetadata]:
         """扫描目录，创建文件元数据"""
         dir_path = validate_file_path(str(directory))
         
@@ -98,7 +105,9 @@ class FileOrganizer:
             await self.db.flush()
             return metadata
     
-    async def organize_file(self, source: Path, target_dir: Path, category: Optional[str] = None) -> FileMetadata:
+    async def organize_file(
+        self, source: Path, target_dir: Path, category: Optional[str] = None
+    ) -> FileMetadata:
         """归档文件到目标目录"""
         source_path = validate_file_path(str(source))
         target_base = validate_file_path(str(target_dir))

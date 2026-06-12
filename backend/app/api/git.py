@@ -1,6 +1,7 @@
 """Git 操作 API"""
-from typing import List, Optional
 from pathlib import Path
+from typing import List, Optional
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 

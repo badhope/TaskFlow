@@ -45,7 +45,9 @@ def validate_model_config(provider: str, model: str) -> None:
     """校验大模型配置"""
     valid_providers = ['openai', 'ollama']
     if provider not in valid_providers:
-        raise ValidationError(f"不支持的模型提供商: {provider}，支持: {valid_providers}")
+        raise ValidationError(
+            f"不支持的模型提供商: {provider}，支持: {valid_providers}"
+        )
     
     if not model or not model.strip():
         raise ValidationError("模型名称不能为空")

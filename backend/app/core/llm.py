@@ -1,7 +1,9 @@
 """大模型统一调度模块"""
-from typing import Optional, AsyncIterator, List, Dict, Any
+from typing import AsyncIterator, Dict, List, Optional
+
 from langchain_core.language_models import BaseChatModel
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
+
 from app.config import settings
 from app.utils.logger import logger
 from app.utils.validator import validate_model_config
@@ -43,7 +45,10 @@ class LLMManager:
     
     def get_llm(self) -> BaseChatModel:
         """获取大模型实例"""
-        current_model = settings.openai_model if settings.llm_provider == "openai" else settings.ollama_model
+        current_model = (
+            settings.openai_model if settings.llm_provider == "openai"
+            else settings.ollama_model
+        )
         validate_model_config(settings.llm_provider, current_model)
         
         # 如果配置没变，返回缓存的实例
@@ -96,7 +101,9 @@ class LLMManager:
             logger.error(f"大模型调用失败: {e}")
             raise
     
-    async def stream_chat(self, messages: List[Dict[str, str]], **kwargs) -> AsyncIterator[str]:
+    async def stream_chat(
+        self, messages: List[Dict[str, str]], **kwargs
+    ) -> AsyncIterator[str]:
         """流式对话"""
         llm = self.get_llm()
         converted_messages = self._convert_messages(messages)

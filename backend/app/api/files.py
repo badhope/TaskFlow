@@ -1,12 +1,13 @@
 """文件管理 API"""
-from typing import List, Optional
 from pathlib import Path
-from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.ext.asyncio import AsyncSession
-from pydantic import BaseModel
+from typing import List, Optional
 
-from app.database import get_db
+from fastapi import APIRouter, Depends, HTTPException, Query
+from pydantic import BaseModel
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.core.file_organizer import FileOrganizer
+from app.database import get_db
 from app.models.file import FileMetadata
 from app.utils.logger import logger
 
@@ -129,7 +130,7 @@ async def delete_file(
     db: AsyncSession = Depends(get_db)
 ):
     """删除文件记录（不删除实际文件）"""
-    from sqlalchemy import select, delete
+    from sqlalchemy import delete, select
     
     stmt = select(FileMetadata).where(FileMetadata.id == file_id)
     result = await db.execute(stmt)

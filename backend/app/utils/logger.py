@@ -1,9 +1,10 @@
 """日志工具"""
 import logging
 import sys
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from typing import Optional
-from logging.handlers import RotatingFileHandler
+
 from app.config import settings
 
 
@@ -35,7 +36,8 @@ def setup_logger(name: str, log_file: Optional[str] = None) -> logging.Logger:
         )
         file_handler.setLevel(logging.DEBUG)
         file_formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(funcName)s:%(lineno)d - %(message)s'
+            '%(asctime)s - %(name)s - %(levelname)s - '
+            '%(funcName)s:%(lineno)d - %(message)s'
         )
         file_handler.setFormatter(file_formatter)
         logger.addHandler(file_handler)

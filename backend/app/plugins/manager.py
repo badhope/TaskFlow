@@ -1,9 +1,12 @@
 """插件管理器"""
-from pathlib import Path
-from typing import Dict, List, Any
-import pluggy
 import importlib
 import sys
+from pathlib import Path
+from typing import Any, Dict, List
+
+import pluggy
+
+from app.config import settings
 from app.plugins.hookspecs import PluginHookSpec
 from app.utils.logger import logger
 
@@ -82,5 +85,4 @@ class PluginManager:
 
 
 # 全局实例
-from app.config import settings
 plugin_manager = PluginManager(settings.plugins_dir)
