@@ -161,3 +161,66 @@
 2026-06-12 11:48:11,527 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: plugin1
 2026-06-12 11:48:11,527 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: plugin2
 2026-06-12 11:48:11,529 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: error_plugin
+2026-06-12 11:49:35,051 - ai_dev_assistant - ERROR - get_git_status:61 - 获取仓库状态失败: 仓库路径不存在: /workspace/backend/nonexistent
+2026-06-12 11:49:35,059 - ai_dev_assistant - ERROR - get_recent_commits:83 - 获取提交记录失败: 仓库路径不存在: /workspace/backend/nonexistent
+2026-06-12 11:49:35,090 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 4 个文件
+2026-06-12 11:49:35,098 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 1 个文件
+2026-06-12 11:49:35,144 - ai_dev_assistant - INFO - organize_file:142 - 文件已归档: /tmp/tmpzwsibjcf/test.py -> /tmp/tmpzwsibjcf/organized/code/test.py
+2026-06-12 11:49:35,155 - ai_dev_assistant - INFO - organize_file:142 - 文件已归档: /tmp/tmp_c0xsv22/test.py -> /tmp/tmp_c0xsv22/organized/custom/test.py
+2026-06-12 11:49:35,167 - ai_dev_assistant - INFO - organize_file:142 - 文件已归档: /tmp/tmpmxmhxz3u/test.py -> /tmp/tmpmxmhxz3u/organized/code/test_1.py
+2026-06-12 11:49:35,178 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 3 个文件
+2026-06-12 11:49:35,198 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 10 个文件
+2026-06-12 11:49:35,327 - ai_dev_assistant - INFO - commit_changes:215 - 提交成功: 913d73a142190fddd075c74bf56cb200f95a654e
+2026-06-12 11:49:35,351 - ai_dev_assistant - INFO - commit_changes:215 - 提交成功: 3453f17c85f3f513eca02f67ca24cd4239398d1a
+2026-06-12 11:49:35,383 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:49:35,385 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:49:35,385 - ai_dev_assistant - INFO - unload_plugin:75 - 插件已卸载: test_plugin
+2026-06-12 11:49:35,387 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:49:35,388 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:49:35,392 - ai_dev_assistant - INFO - load_plugin:63 - 插件加载成功: auto_plugin
+2026-06-12 11:49:35,393 - ai_dev_assistant - WARNING - discover_plugins:26 - 插件目录不存在: /nonexistent/plugins
+2026-06-12 11:49:35,396 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: plugin1
+2026-06-12 11:49:35,397 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: plugin2
+2026-06-12 11:49:35,398 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: error_plugin
+2026-06-12 11:50:04,600 - ai_dev_assistant - ERROR - get_git_status:61 - 获取仓库状态失败: 仓库路径不存在: /workspace/backend/nonexistent
+2026-06-12 11:50:04,608 - ai_dev_assistant - ERROR - get_recent_commits:83 - 获取提交记录失败: 仓库路径不存在: /workspace/backend/nonexistent
+2026-06-12 11:50:04,642 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 4 个文件
+2026-06-12 11:50:04,650 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 1 个文件
+2026-06-12 11:50:04,693 - ai_dev_assistant - INFO - organize_file:142 - 文件已归档: /tmp/tmpdqk0d7ms/test.py -> /tmp/tmpdqk0d7ms/organized/code/test.py
+2026-06-12 11:50:04,704 - ai_dev_assistant - INFO - organize_file:142 - 文件已归档: /tmp/tmpu3ubp7u9/test.py -> /tmp/tmpu3ubp7u9/organized/custom/test.py
+2026-06-12 11:50:04,715 - ai_dev_assistant - INFO - organize_file:142 - 文件已归档: /tmp/tmpfz6fwg1b/test.py -> /tmp/tmpfz6fwg1b/organized/code/test_1.py
+2026-06-12 11:50:04,726 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 3 个文件
+2026-06-12 11:50:04,747 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 10 个文件
+2026-06-12 11:50:04,872 - ai_dev_assistant - INFO - commit_changes:215 - 提交成功: 445c26bf3ca098e61f06528d21b4ac0d99a73a81
+2026-06-12 11:50:04,892 - ai_dev_assistant - INFO - commit_changes:215 - 提交成功: 412175dbef977cd86e5863d62e0fd612cc27c0cb
+2026-06-12 11:50:04,924 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:50:04,926 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:50:04,926 - ai_dev_assistant - INFO - unload_plugin:75 - 插件已卸载: test_plugin
+2026-06-12 11:50:04,927 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:50:04,929 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:50:04,932 - ai_dev_assistant - INFO - load_plugin:63 - 插件加载成功: auto_plugin
+2026-06-12 11:50:04,934 - ai_dev_assistant - WARNING - discover_plugins:26 - 插件目录不存在: /nonexistent/plugins
+2026-06-12 11:50:04,937 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: plugin1
+2026-06-12 11:50:04,937 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: plugin2
+2026-06-12 11:50:04,939 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: error_plugin
+2026-06-12 11:52:23,371 - ai_dev_assistant - ERROR - get_git_status:61 - 获取仓库状态失败: 仓库路径不存在: /workspace/backend/nonexistent
+2026-06-12 11:52:23,407 - ai_dev_assistant - ERROR - get_recent_commits:83 - 获取提交记录失败: 仓库路径不存在: /workspace/backend/nonexistent
+2026-06-12 11:52:23,488 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 4 个文件
+2026-06-12 11:52:23,521 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 1 个文件
+2026-06-12 11:52:23,622 - ai_dev_assistant - INFO - organize_file:142 - 文件已归档: /tmp/tmpchz_wqab/test.py -> /tmp/tmpchz_wqab/organized/code/test.py
+2026-06-12 11:52:23,653 - ai_dev_assistant - INFO - organize_file:142 - 文件已归档: /tmp/tmp400xzqdr/test.py -> /tmp/tmp400xzqdr/organized/custom/test.py
+2026-06-12 11:52:23,681 - ai_dev_assistant - INFO - organize_file:142 - 文件已归档: /tmp/tmpts4v70ix/test.py -> /tmp/tmpts4v70ix/organized/code/test_1.py
+2026-06-12 11:52:23,722 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 3 个文件
+2026-06-12 11:52:23,770 - ai_dev_assistant - INFO - scan_directory:60 - 扫描完成，找到 10 个文件
+2026-06-12 11:52:24,100 - ai_dev_assistant - INFO - commit_changes:215 - 提交成功: c91d56e3eba42022232e3fa1381caa34564c57f7
+2026-06-12 11:52:24,162 - ai_dev_assistant - INFO - commit_changes:215 - 提交成功: cda3473cefd4db3e129905d39de66856d4468080
+2026-06-12 11:52:24,261 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:52:24,267 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:52:24,269 - ai_dev_assistant - INFO - unload_plugin:75 - 插件已卸载: test_plugin
+2026-06-12 11:52:24,274 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:52:24,282 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: test_plugin
+2026-06-12 11:52:24,425 - ai_dev_assistant - INFO - load_plugin:63 - 插件加载成功: auto_plugin
+2026-06-12 11:52:24,429 - ai_dev_assistant - WARNING - discover_plugins:26 - 插件目录不存在: /nonexistent/plugins
+2026-06-12 11:52:24,433 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: plugin1
+2026-06-12 11:52:24,434 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: plugin2
+2026-06-12 11:52:24,439 - ai_dev_assistant - INFO - load_plugin:68 - 插件加载成功: error_plugin
