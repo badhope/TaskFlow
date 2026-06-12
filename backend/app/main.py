@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import init_db
+from app.api import files, git
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -41,3 +42,8 @@ async def root():
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
+
+
+# 注册 API 路由
+app.include_router(files.router, prefix="/api/v1")
+app.include_router(git.router, prefix="/api/v1")

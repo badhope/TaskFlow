@@ -1,0 +1,37 @@
+2026-06-12 11:04:39,190 - ai_dev_assistant - INFO - clone_repository:49 - 开始克隆仓库: https://github.com/octocat/Hello-World.git -> /tmp/tmp35gqud8h/Hello-World
+2026-06-12 11:06:53,620 - ai_dev_assistant - ERROR - clone_repository:69 - 克隆仓库失败: failed to connect to github.com: Connection timed out
+2026-06-12 11:06:53,688 - ai_dev_assistant - INFO - clone_repository:49 - 开始克隆仓库: https://github.com/octocat/Hello-World.git -> /tmp/tmpcfp5244o/Hello-World
+2026-06-12 11:09:08,788 - ai_dev_assistant - ERROR - clone_repository:69 - 克隆仓库失败: failed to connect to github.com: Connection timed out
+2026-06-12 11:09:08,812 - ai_dev_assistant - INFO - clone_repository:49 - 开始克隆仓库: https://github.com/octocat/Hello-World.git -> /tmp/tmpmwk5op6y/Hello-World
+2026-06-12 11:11:23,957 - ai_dev_assistant - ERROR - clone_repository:69 - 克隆仓库失败: failed to connect to github.com: Connection timed out
+2026-06-12 11:13:10,133 - ai_dev_assistant - INFO - commit_changes:209 - 提交成功: 83dc1427ede21ecf5684da9f794533947351494d
+2026-06-12 11:13:10,161 - ai_dev_assistant - INFO - commit_changes:209 - 提交成功: 432ba4312b1cbd534744ae3663eb1f4f07756492
+2026-06-12 11:22:44,517 - ai_dev_assistant - INFO - scan_directory:53 - 扫描完成，找到 4 个文件
+2026-06-12 11:22:44,528 - ai_dev_assistant - INFO - scan_directory:53 - 扫描完成，找到 1 个文件
+2026-06-12 11:22:44,584 - ai_dev_assistant - INFO - organize_file:133 - 文件已归档: /tmp/tmplgnv1sum/test.py -> /tmp/tmplgnv1sum/organized/code/test.py
+2026-06-12 11:22:44,597 - ai_dev_assistant - INFO - organize_file:133 - 文件已归档: /tmp/tmpft2z07tw/test.py -> /tmp/tmpft2z07tw/organized/custom/test.py
+2026-06-12 11:22:44,610 - ai_dev_assistant - INFO - organize_file:133 - 文件已归档: /tmp/tmpmrxuetr3/test.py -> /tmp/tmpmrxuetr3/organized/code/test_1.py
+2026-06-12 11:22:44,623 - ai_dev_assistant - INFO - scan_directory:53 - 扫描完成，找到 3 个文件
+2026-06-12 11:22:44,644 - ai_dev_assistant - INFO - scan_directory:53 - 扫描完成，找到 10 个文件
+2026-06-12 11:30:02,527 - ai_dev_assistant - INFO - load_plugin:55 - 插件加载成功: test_plugin
+2026-06-12 11:30:02,529 - ai_dev_assistant - INFO - load_plugin:55 - 插件加载成功: test_plugin
+2026-06-12 11:30:02,529 - ai_dev_assistant - INFO - unload_plugin:64 - 插件已卸载: test_plugin
+2026-06-12 11:30:02,531 - ai_dev_assistant - INFO - load_plugin:55 - 插件加载成功: test_plugin
+2026-06-12 11:30:02,553 - ai_dev_assistant - INFO - load_plugin:55 - 插件加载成功: test_plugin
+2026-06-12 11:30:02,560 - ai_dev_assistant - INFO - load_plugin:55 - 插件加载成功: auto_plugin
+2026-06-12 11:30:02,562 - ai_dev_assistant - WARNING - discover_plugins:23 - 插件目录不存在: /nonexistent/plugins
+2026-06-12 11:30:02,565 - ai_dev_assistant - INFO - load_plugin:55 - 插件加载成功: plugin1
+2026-06-12 11:30:02,565 - ai_dev_assistant - INFO - load_plugin:55 - 插件加载成功: plugin2
+2026-06-12 11:30:02,570 - ai_dev_assistant - INFO - load_plugin:55 - 插件加载成功: error_plugin
+2026-06-12 11:30:34,435 - ai_dev_assistant - INFO - load_plugin:65 - 插件加载成功: test_plugin
+2026-06-12 11:30:34,437 - ai_dev_assistant - INFO - load_plugin:65 - 插件加载成功: test_plugin
+2026-06-12 11:30:34,437 - ai_dev_assistant - INFO - unload_plugin:72 - 插件已卸载: test_plugin
+2026-06-12 11:30:34,439 - ai_dev_assistant - INFO - load_plugin:65 - 插件加载成功: test_plugin
+2026-06-12 11:30:34,441 - ai_dev_assistant - INFO - load_plugin:65 - 插件加载成功: test_plugin
+2026-06-12 11:30:34,444 - ai_dev_assistant - INFO - load_plugin:60 - 插件加载成功: auto_plugin
+2026-06-12 11:30:34,446 - ai_dev_assistant - WARNING - discover_plugins:23 - 插件目录不存在: /nonexistent/plugins
+2026-06-12 11:30:34,449 - ai_dev_assistant - INFO - load_plugin:65 - 插件加载成功: plugin1
+2026-06-12 11:30:34,449 - ai_dev_assistant - INFO - load_plugin:65 - 插件加载成功: plugin2
+2026-06-12 11:30:34,451 - ai_dev_assistant - INFO - load_plugin:65 - 插件加载成功: error_plugin
+2026-06-12 11:30:49,377 - ai_dev_assistant - ERROR - get_git_status:60 - 获取仓库状态失败: 仓库路径不存在: /workspace/backend/nonexistent
+2026-06-12 11:30:49,386 - ai_dev_assistant - ERROR - get_recent_commits:82 - 获取提交记录失败: 仓库路径不存在: /workspace/backend/nonexistent
