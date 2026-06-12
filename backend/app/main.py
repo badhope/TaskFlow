@@ -1,12 +1,22 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
+from app.database import init_db
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 启动时初始化数据库
+    await init_db()
+    yield
+    # 关闭时清理资源
 
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
     debug=settings.debug,
+    lifespan=lifespan,
 )
 
 # 配置 CORS
