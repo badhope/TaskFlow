@@ -14,6 +14,7 @@ router = APIRouter(prefix="/files", tags=["files"])
 
 
 class FileResponse(BaseModel):
+    """文件响应模型"""
     id: int
     file_path: str
     file_name: str
@@ -25,8 +26,7 @@ class FileResponse(BaseModel):
     created_at: str
     updated_at: str
     
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 
 class ScanRequest(BaseModel):
