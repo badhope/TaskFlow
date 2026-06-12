@@ -1,11 +1,16 @@
 from pathlib import Path
 from typing import Optional
 from pydantic_settings import BaseSettings
-from pydantic import Field
+from pydantic import Field, ConfigDict
 
 
 class Settings(BaseSettings):
     """应用配置"""
+    
+    model_config = ConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8"
+    )
     
     # 应用基础配置
     app_name: str = "AI Dev Assistant"
@@ -33,10 +38,6 @@ class Settings(BaseSettings):
     
     # 插件配置
     plugins_dir: Path = Field(default=Path("./plugins"))
-    
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
 
 
 settings = Settings()

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from sqlalchemy import String, Text, DateTime, Integer, JSON
 from sqlalchemy.orm import Mapped, mapped_column
@@ -14,8 +14,8 @@ class Project(Base):
     git_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     local_path: Mapped[str] = mapped_column(String(500))
     config: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)  # 项目特定配置
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     def __repr__(self) -> str:
         return f"<Project(id={self.id}, name='{self.name}')>"

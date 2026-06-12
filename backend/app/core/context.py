@@ -1,7 +1,7 @@
 """对话上下文管理"""
 from typing import List, Dict, Any
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 @dataclass
@@ -9,7 +9,7 @@ class Message:
     """消息"""
     role: str  # user, assistant, system
     content: str
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 

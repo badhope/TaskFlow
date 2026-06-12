@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from sqlalchemy import String, Text, DateTime, Integer, JSON
 from sqlalchemy.orm import Mapped, mapped_column
@@ -14,7 +14,7 @@ class OperationLog(Base):
     status: Mapped[str] = mapped_column(String(20))  # success, failed, pending
     details: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
     error_message: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
     
     def __repr__(self) -> str:
         return f"<OperationLog(id={self.id}, type='{self.operation_type}', status='{self.status}')>"

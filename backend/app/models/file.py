@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from sqlalchemy import String, Text, DateTime, Integer, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
@@ -18,8 +18,8 @@ class FileMetadata(Base):
     project_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     size_bytes: Mapped[int] = mapped_column(Integer, default=0)
     is_archived: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     def __repr__(self) -> str:
         return f"<FileMetadata(id={self.id}, file_name='{self.file_name}')>"
